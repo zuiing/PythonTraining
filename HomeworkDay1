@@ -1,0 +1,5 @@
+name=input('请输入您的姓名')
+gender=input('请输入性别')
+age=input('请输入您的年龄')
+print('您的姓名是：%s，您的性别是%s，您是%d年出生的'%(name,gender,2019-int(age)))
+
