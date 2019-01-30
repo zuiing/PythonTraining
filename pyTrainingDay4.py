@@ -1,173 +1,146 @@
-"""【Day 3】
-【dict字典】
-定义
-创建
-字典的相关方法
------------------------------------
-【set集合】
-特性
-创建
-方法
--------------------------------------
-【file文件读取】
- 打开文件方式（读写两种方式）
-文件对象的操作方法
-*学习对excel及csv文件进行操作*
-**内容为选做内容，可根据自己基础决定是否做此内容
+"""【Day 4】
+判断语句（要求掌握多条件判断）
+循环语句
+三目表达式
+容器
+可迭代对象
+迭代器
+生成器
 --------------------------------------
+"""
+# -----------------判断语句---------------------
+# 1）if判断语句  关系运算符和逻辑运算符（and or）
+# age=int(input("请输入一个年龄"))
+# if age >= 0 and age <= 14:
+#     print("kid")
+# elif(age<18):
+#     print("teenager")
+# else:
+#     print("adult")
+# 2）循环语句
+# ***第一种是for...in循环，依次把list或tuple中的每个元素迭代出来
+# classmates=["Alice",'Bob',"Berry"]
+# print("班上同学有：")
+# for name in classmates:
+#     print(name)
+# sum=0  #求1~100的和  需注意range(a,b)函数不包括b的值
+# for x in range(1,101):
+#     sum+=x
+# print(sum)
+# ***第二种循环while
+# sum=0
+# a=100
+# while a>0:
+#     sum+=a
+#     a-=1
+# print(sum)
+# break 提前结束循环 continue跳过当前的这次循环，直接进入下一次循环
+# -----------------三目表达式----------------
+# 求两个数的较大值
+# x=input("请输入第一个整数")
+# y=input("请输入第二个整数")
+# print("较大的那个数为：",x if x>=y else y)
+# z=input("请输入第三个整数")
+# print("三个数中的最大值为:",(x if x>y else y) if (x if x>y else y)>z else z)
+# --------------容器 高级特性---------------------
+# 1）切片 取list或tuple的前部分元素
+# L1=["abc","def","hij",11,22,33]
+# # 取前n个元素，可用索引0~n-1
+# data=[]
+# n=3
+# for i in range(n):
+#     data.append(L1[i])
+# print(data)
+# 但是用上面的循环比较繁琐 因此python提供了切片操作符
+# data=L1[0:3] #slice同样支持倒数切片
+# data2=L1[-3:] #取后三个  如果只有冒号就是取所有数
+# print(data2)
+# 2) 容器（containter）容器中的元素可以逐个迭代获取，可以用in not in判断是否在容器中
+#   这类数据结构把所有的元素存储在内存中（也有特例，并不是将所有的元素放在内存，如迭代器和生成器对象）
+# list=['a','b',1,2,[3,4]]
+# tuple=['元素','不可变','没有','追加或插入','函数']
+# dict={'name':'alice','age':18,'hobby':'painting'}
+# set={1,2,3,3,4,5,'a','b','a','c'} #重复的元素会被自动过滤
+# str="12345abcdefg"
+# print(set)
+# print("key值属于dict：",'name'in dict,"value值不是dict的元素：",'alice' in dict)
+# 3)可迭代对象(iterable)：可直接用于for循环的对象统称为可迭代对象，上述容器都是可迭代对象，此外
+# 处于打开状态的files、sockets等，但凡是可以返回一额迭代器的对象都是可迭代对象
+# it=iter(list) #it是一个迭代器，内部持有一个状态没用于记录当前迭代所在位置，以便下次迭代的时候获取元素
+# print(type(it))
+# for elem in list:
+#     print(it)
+# 迭代器有一种具体的迭代器类型，如list_iterator,set_iterator 可迭代对象实现了__iter__方法
+# 该方法返回一个迭代器对象
+# 4)生成器generator：将列表元素按照某种算法推算出来
+# L2=[x*x for x in range(10)]
+# print(L2)
+# g=(x*x for x in range(10))
+# print(g) #打印的是当前元素所在位置
+# print(next(g),next(g),next(g))
+# print(next(g),next(g),next(g))
+# for i in g:
+#     print(i)
+# ***定义一个fib（）函数
+def fib(max):
+    n,a,b=0,0,1
+    while n<max:
+        print(b)
+        a,b=b,a+b
+        n+=1
+    return 'done'
+# print(fib(5)) #调用fib()
+def fib2(max):
+    n,a,b=0,0,1
+    while n<max:
+        yield b
+        a,b=b,a+b
+        n+=1
+    return 'done'
+g2=fib2(3)
+# print(g2)
+# print(next(g2),next(g2),next(g2),"迭代到此结束：")
+# print("下面将出现报错：",next(g2))
+# 总结：generator和函数执行流程不同，函数是顺序执行，而变成generator的函数。
+# 在每次调用next()的时候执行，遇到yield语句返回，再次执行时从上次返回的yield语句处继续执行
+# 5）迭代器iterator 任何实现了__iter__和__next__()方法的对象都是迭代器
+# 可使用isinstance()判断一个对象是否是iterable对象
+# from collections import Iterable
+# print(isinstance([],Iterable))
+# print(isinstance('abc',Iterable))
+# print(isinstance(100,Iterable))
+
+# Day4作业
+"""【作业构想】
+学习代码200-300行
 【作业构想】
 学习代码200-300行
-读取一个文件【文件将在之后给出】，将文件中转换为字典，key值为学习项目，
-value值为一个负责人列表，并判断字典中是否有负责人负责多个学习项目。"""
-# ------------------dict字典---------------------
-# 1）python内置字典，在其他语言中也称map，使用（key-value)存储，具有极快的查找速度
-# names=['Alice','Bob','Tracy']
-# scores=[99,90,59]
-# a=input('请输入你想查询的同学的名字')
-# a_index=names.index(a)
-# print("%s的成绩为：%d"%(a,scores[a_index]))
-# 用dict实现，只需一个 名字：成绩的对照表
-# d1={'Alice':99,'Bob':90,'Tracy':59}
-# # a=input('请输入你想查询的同学的名字')
-# # print("%s的成绩为：%d"%(a,d1[a]))
-# # 2)操作：存：可直接初始化或通过key值放入
-# d1['Berry']=100
-# # 3）key值不可重复，如果key不存在，dict会报错，判断key是否存在的方法
-# #  通过in判断、通过dict提供的get()方法，若不存在返回none或自己指定的值
-# print("第一种判断：",'alice' in d1,"   第二种判断：",d1.get('alice'))
-'''总结：dict内部存放的顺序和可以、放入的顺序无关
-和list相比：
-  1、查找和插入的速度极快，不会随key值的增加而变慢
-  2、需要占用大量的内存，内存浪费多
-而list相反。
-dict是空间换时间的一种方法，哈希表需要额外的内存记录映射关系
-谨记：dict的key必须是不可变对象，key值计算位置的算法称为哈希算法
-在python中，字符串、整数都是不可变的，因此可作为key，而list可变，不能作为key值  
-'''
-# -----------------set-----------------
-# 和dict类似，也是一组key的集合，但不存储value，key值不重复
-# # 1）set创建，需要提供一个list作为输入集合
-# 创建一个空集合必须用set()而不是{},因为{}使用来创建一个空字典
-# s1=set([1,2,3.0])
-# print("类型：",type(s1),"  s1内部元素：",s1)
-# s2=set(['a','b','c'])
-# print("类型：",type(s2),"  s2内部元素：",s2)
-# s3=set([1,2.0,'a'])
-# print("类型：",type(s3),"  s3内部元素：",s3)
-# 显示的{‘a',1，2.0}只是告诉你set内部有1，2，3这三个元素，显示的顺序也不表示是有序的
-# # 2）重复元素在set中被自动过滤
-# s4=set([1,2,2,2,3])
-# print("s4的元素",s4)
-# # 3)add()  remove()方法
-# s4.add(2)
-# s4.add(6)
-# s4.remove(2)
-# print(s4)
-# 4）set可看成数学意义上的无序和无重复元素的集合，两个set可做交集、并集等操作
-# s5=set(['a','b','c'])
-# s6=set([1,2,3])
-# print("s5和s6交集：",s5&s6,"  s5和s6并集：",s5|s6)
-# 5）dict和set区别
-# set没有存储对应的value，但是，set和dict原理一样，因此，不可放入可变对象
-# -------------再议不可变对象-------------
-# str是不可变，list是可变
-# 1）对于可变对象list1，对list进行操作，list内部的内容会变化
-# L1=[1,2,0]
-# L1.sort()
-# print("排序后：",L1)
-# 2)对于不可变对象str
-# s1="abcd"
-# s2=s1.replace('a','A')
-# print("替换之后的结果：",s2,"原来的字符串：",s1)
-# s1=s2
-# print("让s1重新指向另一个对象的结果：",s1)
-"""上述现象解释：s1是变量，'abcd'是对象，s1指向的是对象(字符串常量)'abcd',
-replace()方法会创建一个新字符串'Abcd',可以将定义s2指向新串
-因此，对于不变对象来说，调用对象自身的任意方法，也不会改变自身的内容，
-相反这些方法会创建新的对象并返回，保证变量本身不可变
-"""
-# ------------拓展-------------------
-# tuple是不可变对象
-# t1=(1,2,3)
-# t2=(1,[2,3])
-# s7=set(t1)
-# s8=set(t2)
-# print("成功示例：",s7,"不成功示例：",s8)
-# 现象解释：t1的对象不可变，能成功，但t2的第二个元素指向一个list，而该list可变
-# --------------file文件读写-----------------------
-# 1)第一种读取方式：读取的是非UTF-8编码的文件时，要加上encoding=utf-8，读取的是文本文件
-# f=open("homework.txt","r",encoding='UTF-8')
-# # print("1、全部读取：",f.read()) # 会将txt的全部内容一次性读取，如果文件太大，内存就会爆炸
-# print("文件信息为：",f)
-# # 文件信息包括f.name  f.mode   f.encoding，可分别打印
-# f.close()
-# ***用try...finally能够保证无论是否出错都能正确的关闭文件
-# try:
-#     f=open("homework.txt","r",encoding='UTF-8')
-#     print("2、只读10字节：",f.read(10)) #可以用read(size)方法读取size个字节
-# finally:
-#     if f:
-#         f.close()
-# # # ***引入with自动调用close()方法
-# with open("homework.txt","r",encoding='UTF-8') as f:
-#     print("3、只读一行：",f.readline())
-# with open("homework.txt","r",encoding='UTF-8') as f:
-#     L1=f.readlines()
-# print("4、按行读取，将读取的内容放到list中：",L1)
-# L2=[]
-# for line in L1:
-#     L2.append(line.strip())
-# print("5、将末尾的\\n去掉",L2)
-# 第二种读取方式：读取二进制文件。如图片、视频等，用‘rb’模式打开文件
-# f=open("bg.jpg","rb")
-# # print(f.read())  #读取的是像素值，以二进制进行读取的，为解码
-# f.close()
-# 2) 文件的写操作
-# fo=open("output.txt","a")
-# fo.write("先写入一个字符串") #写的可以实字符串也可以是二进制数据 write()方法不会在字符串的结尾添加换行符
-# fo.writelines(['abc','123']) # list元素的类型只有是str时才能写入
-# 3)拓展练习 读取csv文件（编码格式可以是ANSI或GB2312）及写入
-# import csv
-# # with open("input.csv",'r',encoding='ANSI') as csvfile:
-# #     read=csv.reader(csvfile)
-# #     # next(csvfile, None)
-# #     print(read)
-# #     for i in read:
-# #         print(i)
-# dic={"姓名":'Alice',"年龄：":'永远18'}
-# csvfile=open("input.csv",'w',newline='')
-# writer=csv.writer(csvfile)
-# for key in dic:
-#     writer.writerow([key,dic[key]])
-# csvfile.close()
-# excel文件读和写
-# import pandas as pd
-# # read_csv()能够读取全部内容，但总要指定解码格式
-# fi=pd.read_csv("input.csv",encoding='ANSI')
-# data=fi.head() #默认取出前五行的内容
-# print(fi)
-# print(data)
-# fi.close()
-
-# Day2作业
-# 1、读取多行保存到L1列表
-with open("homework.txt","r",encoding='UTF-8') as f:
-    L1=f.readlines()
-# 2、将每行以空格隔开，第一项作为字典的key值，第二、三项作为value
-L=[] # 临时变量
-L_all=[] #存储所有负责人的姓名
-d={}
-for line in L1:
-    L=line.split()
-    d[L[0]]=[L[1],L[2]]
-    L_all.append(L[1])
-    L_all.append(L[2])
-# 3、判断是否有负责人负责多个集训
-# print(L_all)
-s=set(L_all)
-# print("L_all长度：",len(L_all))
-# print("去重后的长度：",len(s))
-if len(L_all)>len(s):
-    print("存在有负责人负责多个集训")
-else:
-    print("不存在负责人负责人负责多个集训")
+请对方输入一个0-9之间的数字，进行检查，若不是数字提示：您输入的不是数字，请输入0-9间的数字，若数字不在0-9范围内，提示用户输入0-9之间的数字，直至用户输入正确。
+系统随机生成一个长度为3的数字列表，且列表中元素在0-9之间并且不相等。将用户输入与该列表进行比较，若为列表第一个元素，则荣获第一名，列表第二个元素，则荣获第二名，列表第三个名字，则荣获第三名，否则提示用户未得奖，
+输入1重新开始游戏，输入2则结束游戏。
+注意：每次游戏中列表中数字要求随机生成，每轮游戏都不相等。
+-------------------------------------"""
+import random
+flag=True
+while flag:
+    # 1)输入0~0之间的数字
+    while True:
+        global a
+        a = input("请输入一个0~9之间的数字：")
+        if a.isdigit()==False:
+            continue
+        a=int(a)
+        if a >= 0 and a <= 9:
+            break
+    # 2）随机生成长度为3的随机列表
+    winlist = random.sample(range(0, 9), 3)
+    print("随机产生的中奖号码为:", winlist)
+    # 3)确定奖项
+    if a in winlist:
+        print("恭喜获得%d等奖" % (winlist.index(a) + 1))
+    else:
+        print("没有中奖")
+    n=int(input("输入1重新开始游戏，输入2则结束游戏"))
+    if n==2:
+        print("游戏结束！")
+        flag=False
